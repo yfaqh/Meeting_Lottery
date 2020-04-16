@@ -108,6 +108,7 @@ public class Candidators {
             input_seed = new Scanner(System.in);
             // 测试用随机数种子
             // String seed =
+            // 柳叶刀主编称美国做法是对全人类犯罪
             // "长腿熊本熊：经典抬杠，无缝是指跑跑卡丁车的一种脚本，可以取消两次连续氮气喷射中间的后摇，经常用于刷地图记录，因为取消这种后摇可以节约0.0几秒的时间，但人手是无法做到的，无缝已经存在很多年了，官方没有对其作出限制或者封禁，而杠精会用这个来diss跑跑卡丁车的高手";
             String seed = input_seed.nextLine();
             sha256_seed = ComputeHashValue.getSHA256StrJava(seed);
