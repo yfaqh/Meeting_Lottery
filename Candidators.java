@@ -54,7 +54,7 @@ public class Candidators {
             // 读取班级学生的学号
             arrayList = new ArrayList<String>();
             input_num = new Scanner(
-                    new File(System.getProperty("user.dir") + "/practice/MeetingLottery/school_number.txt"));
+                    new File(System.getProperty("user.dir") + "/school_number.txt"));
             while (input_num.hasNext()) {
                 arrayList.add(input_num.next());
             }
