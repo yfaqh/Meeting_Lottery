@@ -44,7 +44,7 @@ public class Candidators {
         hashTemplateMap.put('7', 7);
         hashTemplateMap.put('8', 8);
         hashTemplateMap.put('9', 9);
-        // System.out.println(hashMap); //打印测试
+        // System.out.println(hashTemplateMap); //打印测试
     }
 
     // 获取各学号对应的sha256加密后的值，存于数组sha256_num中
@@ -71,10 +71,10 @@ public class Candidators {
             // }
 
             // 学号经sha256加密后，结果打印测试
-            // System.out.println("各学号经sha256加密结果为：");
-            // for (int i = 0; i < sha256_num.length; i++) {
-            // System.out.println(arrayList.get(i) + " --> " + sha256_num[i]);
-            // }
+            System.out.println("各学号经sha256加密结果为：");
+            for (int i = 0; i < sha256_num.length; i++) {
+            System.out.println(arrayList.get(i) + " --> " + sha256_num[i]);
+            }
         } catch (FileNotFoundException e) {
             // TODO: handle exception
             e.printStackTrace();
@@ -84,13 +84,16 @@ public class Candidators {
 
         // 获取学生的学号加密后的hash值，计算学号hash值对应的十进制值，存于sha256_num_decimal中（存到一个HashMap中）
         sha256_num_decimal = new HashMap<>();
-        double temp = 0;
+        double temp;
         for (int i = 0; i < num; i++) { // 遍历每个学号
+            temp = 0;       //每次算完一个人的值，务必要置0！！！
             for (int j = 0; j < 64; j++) { // 计算当前学号的hash对应的十进制值
                 temp += Math.pow(hashTemplateMap.get(sha256_num[i].charAt(j)), 63 - j);
             }
             sha256_num_decimal.put(i, temp); // 结果存入一个HashMap，key=i（默认序号），value=十进制形式的hash值
         }
+        // System.out.println();
+        // System.out.println("学号经sha256加密后转化为十进制：");
         // System.out.println(sha256_num_decimal); //打印测试
 
     }
@@ -100,6 +103,7 @@ public class Candidators {
 
         try {
             // 输入随机数种子
+            System.out.println();
             System.out.print("请粘贴随机数种子：");
             input_seed = new Scanner(System.in);
             // 测试用随机数种子
@@ -108,7 +112,7 @@ public class Candidators {
             String seed = input_seed.nextLine();
             sha256_seed = ComputeHashValue.getSHA256StrJava(seed);
             // System.out.println();
-            // System.out.println("随机数种子经sha256加密后的值：" + sha256_seed); //打印测试
+            System.out.println("随机数种子经sha256加密后的值：" + sha256_seed); //打印测试
         } catch (Exception e) {
             // TODO: handle exception
             e.printStackTrace();
@@ -133,9 +137,13 @@ public class Candidators {
         for (int i = 0; i < num; i++) {
             subtractMap.put(arrayList.get(i), Math.abs(sha256_num_decimal.get(i) - sha256_seed_decimal));
         }
+        // System.out.println("相减结果：");
+        // System.out.println(subtractMap);
         // 需要对subtratMap里的Entry<K, V>按value值的大小进行排序
         // 1.先将subtractMap里的entrySet放入list集合
         List<Map.Entry<String, Double>> list = new ArrayList<>(subtractMap.entrySet());
+        // System.out.println("list:");
+        // System.out.println(list);
         // 2.对list进行排序，并通过Comparator传入自定义的排序规则
         Collections.sort(list, new Comparator<Map.Entry<String, Double>>() {
             //重写排序规则，返回值小于0表示升序，大于0表示降序
@@ -147,7 +155,7 @@ public class Candidators {
         });
         // 3.使用forEach遍历list中的键值对
         System.out.println();
-        System.out.println("排序结果：");
+        System.out.println("排序结果，学号对应的值为与随机数种子差的绝对值：");
         list.forEach(obj -> System.out.println(obj));
     }
 
